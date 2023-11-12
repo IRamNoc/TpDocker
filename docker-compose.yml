@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+
+  front:
+    build: ./frontend
+    depends_on:
+      - back
+    ports:
+      - "3000:3000"
+    networks:
+      - reseauApp
+
+  back:
+    build: ./backend
+    depends_on:
+      - database
+    ports:
+      - "3001:3001"
+    networks: 
+     - reseauApp
+  
+  database:
+    image: mongo
+    restart: always
+    volumes: 
+      - mongodb:/data/db
+    ports:
+      - 27017:27017
+    networks: 
+     - reseauApp
+
+networks:
+  reseauApp:
+
+volumes: 
+  mongodb:
