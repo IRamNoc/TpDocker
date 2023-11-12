@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD npm install && npm start
+CMD npm start
