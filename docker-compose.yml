@@ -2,12 +2,21 @@ version: "3.8"
 
 services:
 
-  front:
+  front1:
     build: ./frontend
     depends_on:
       - back
     ports:
       - "3000:3000"
+    networks:
+      - reseauApp
+
+  front2:
+    build: ./frontend
+    depends_on:
+      - back
+    ports:
+      - "3002:3000"
     networks:
       - reseauApp
 
@@ -26,9 +35,20 @@ services:
     volumes: 
       - mongodb:/data/db
     ports:
-      - 27017:27017
+      - 27018:27017
     networks: 
      - reseauApp
+
+  loadbalancer:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks: 
+     - reseauApp
+    depends_on:
+      - back
+      - front1
+      - front2
 
 networks:
   reseauApp:
